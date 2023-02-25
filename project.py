@@ -9,48 +9,47 @@ try:
                          'Ваша задача — преобразовать его в двоичную систему счисления. ' \
                          'За каждый правильный ответ вам начисляется одно очко. ' \
                          'За ошибочные ответы очки не вычитаются.'
-    bg = BinaryGame(0)
-    mg = MathGame(0)
-    username = input("Enter your name: ")
+    bg = BinaryGame()
+    mg = MathGame()
+    username = input("Введи свое имя: ")
     score = int(get_user_score(username))
     if score == -1:
         newuser = True
         score = 0
     else:
         newuser = False
-    print("Welcome, " + username + "! Your score: " + str(score))
+    print("Привет, " + username + "! Твой баланс очков: " + str(score))
 
     user_choice = 0
     while user_choice != -1:
-        game = int(input("Math Game (1) or Binary Game (2)? "))
+        game = int(input("Математическая игра (1) или Двоичная игра (2)? "))
         while game not in (1, 2):
-            game = int(input("Incorrect choice! Math Game (1) or Binary Game (2)? "))
+            game = int(input("Кажется, ты выбрал что-то не то. Математическая игра (1) или Двоичная игра (2)? "))
 
-        num_prompt = int(input("How many questions do you want per game (1 to 10)? "))
+        num_prompt = int(input("Сколько вопросов ты хочешь получить в этом раунде (1 to 10)? "))
         while True:
             try:
                 num = int(num_prompt)
-                print("количество вопросов - " + str(num))
                 break
             except:
-                num_prompt = int(input("Incorrect choice! How many questions do you want per game (1 to 10)?"))
+                num_prompt = int(input("Что-то не так. Сколько вопросов ты хочешь получить в этом раунде (1 to 10)? "))
 
         if game == 1:
-            mg._no_of_question = num
+            _no_of_question = mg.no_of_question(num)
             print_instructions(math_instruction)
-            score += mg.generate_questions()
-            print("Congratulate! Your score: " + str(score))
-            user_choice = int(input("Press Enter to continue or enter -1 to exit "))
+            score += mg.generate_questions(_no_of_question)
+            print("Поздравляю! Теперь твой баланс очков: " + str(score))
+            user_choice = int(input("Что дальше? Сыграем еще раз (1) или попрощаемся (-1)? "))
         elif game == 2:
-            bg.no_of_question_set = num
+            _no_of_question = bg.no_of_question(num)
             print_instructions(binary_instruction)
-            score += bg.generate_questions()
-            print("Congratulate! Your score: " + str(score))
-            user_choice = int(input("Press Enter to continue or enter -1 to exit "))
+            score += bg.generate_questions(_no_of_question)
+            print("Поздравляю! Теперь твой баланс очков: " + str(score))
+            user_choice = int(input("Что дальше? Сыграем еще раз (1) или попрощаемся (-1)? "))
         else:
-            print("Oops! WTF?!")
+            print("При выборе игры произошла ошибка, попробуй запустить заново.")
             break
     update_user_score(newuser, username, str(score))
 
 except:
-    print("Oops! WTF?! Bye-bye!")
+    print("Произошла какая-то неведомая фигня. Запусти приложение заново.")

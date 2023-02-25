@@ -35,9 +35,3 @@ def update_user_score(newuser, username, score):
                         f.write(line)
         remove('userScores.txt')
         rename('userScores.tmp', 'userScores.txt')
-
-#
-# # print_instructions()
-# print(get_user_score('Maxim'))
-# # update_user_score(True, 'Maria', '5110')
-# # update_user_score(False, 'Max', '50')
